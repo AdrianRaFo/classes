@@ -1,0 +1,5 @@
+package std
+
+object Types {
+
+}
