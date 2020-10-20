@@ -9,6 +9,7 @@ target/
 .idea
 
 ### VS Code
+.bsp
 .vscode
 .metals
 .bloop
