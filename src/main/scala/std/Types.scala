@@ -18,6 +18,4 @@ object Types {
   val rightOrLeft:Either[String, Int] = Right(1) //this can be Int or String but it's Int
   val leftOrRight: Either[String, Int] = Left("left path") //this can be Int or String but it's String
 
-  
-
 }
