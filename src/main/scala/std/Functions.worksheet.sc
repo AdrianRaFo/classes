@@ -65,3 +65,7 @@ rightOrLeft match {
   case Right(x) => s"This is $x"
   case Left(y)  => s"This is $y"
 }
+
+def requestAFunction(str: String)(function: String => Int): Int = function(str)
+requestAFunction("1")(_.toInt)
+requestAFunction("1")((it: String) => it.toInt)
