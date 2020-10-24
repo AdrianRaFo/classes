@@ -1,5 +1,13 @@
 package std
 
+//no params, we can inherit from multiple traits
+trait Interface{
+  def interfaceName: String
+}
+
+//params, only can inherit from one abstract class
+abstract class MyAbstractClass(age: Int)
+
 //unique instance
 object ObjectsOriented {
 
@@ -10,8 +18,9 @@ object ObjectsOriented {
 }
 
 //multiple instances
-class MyClass(name: String, age: Int) {
+class MyClass(name: String, age: Int) extends MyAbstractClass(age) with Interface {
 
+  def interfaceName: String = "MyClass"
 
   val noMutable = true
 
@@ -28,4 +37,5 @@ class MyClass(name: String, age: Int) {
 
 //used to model
 case class MyCaseClass(name: String, age: Int)
+
 
