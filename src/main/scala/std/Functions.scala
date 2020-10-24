@@ -5,8 +5,8 @@ object Functions {
   //lists
   val list: List[Int] = List(1, 2, 3)
   list.map(_ + 1) //List(2, 3, 4)
-  list.fold(0){ 
-    case (acc, elem) =>  acc + elem
+  list.fold(0) {
+    case (acc, elem) => acc + elem
   }
   list.forall(_ % 2 == 0) //false
   list.filter(_ % 2 == 0) //List(2)
@@ -55,12 +55,13 @@ object Functions {
 
   //pattern matching
   something match {
-    case Some(1)          => "This is 1"
-    case Some(2)          => "This is 2"
-    case Some(x)          => s"This is $x" //This is 1
-    case somet: Some[Int] => s"This is $somet" //This is Some(1) Unreachable, Some(x) cover this and the code will always goes through there
-    case somet @ Some(1)  => s"This is $somet" //This is Some(1)
-    case None             => """This 
+    case Some(1) => "This is 1"
+    case Some(2) => "This is 2"
+    case Some(x) => s"This is $x" //This is 1
+    case somet: Some[Int] =>
+      s"This is $somet" //This is Some(1) Unreachable, Some(x) cover this and the code will always goes through there
+    case somet @ Some(1) => s"This is $somet" //This is Some(1)
+    case None            => """This 
                                |is 
                                |nothing""".stripMargin
   }

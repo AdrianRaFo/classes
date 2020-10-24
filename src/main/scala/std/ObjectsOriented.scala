@@ -1,7 +1,7 @@
 package std
 
 //no params, we can inherit from multiple traits
-trait Interface{
+trait Interface {
   def interfaceName: String
 }
 
@@ -11,9 +11,8 @@ abstract class MyAbstractClass(age: Int)
 //unique instance
 object ObjectsOriented {
 
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit =
     println("Hello World!")
-  }
 
 }
 
@@ -31,11 +30,9 @@ class MyClass(name: String, age: Int) extends MyAbstractClass(age) with Interfac
 
   lazy val winy: String = throw new RuntimeException("Winy is lazy even to fail") // Executed the first time is called
   println("ha ha") //This is printed
-  println(winy) //Exception thrown here because it's executed here
+  println(winy)    //Exception thrown here because it's executed here
 
 }
 
 //used to model
 case class MyCaseClass(name: String, age: Int)
-
-
