@@ -39,3 +39,11 @@ def giveMeTheIntToReturnString(num: Int): String = num.toString
 giveMeTheIntToReturnString(1)
 giveMeTheIntToReturnString("1")
 giveMeTheIntToReturnString("pollas")
+
+def giveMeTheImplicitIntToReturnString(implicit num: Int): String = num.toString
+
+implicit val impl1 = 1
+
+giveMeTheImplicitIntToReturnString
+giveMeTheImplicitIntToReturnString(impl1)
+giveMeTheImplicitIntToReturnString(1)
