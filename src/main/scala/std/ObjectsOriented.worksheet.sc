@@ -1,5 +1,3 @@
-package std
-
 //no params, we can inherit from multiple traits
 trait Interface {
   def interfaceName: String
