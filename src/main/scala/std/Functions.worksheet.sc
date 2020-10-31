@@ -33,9 +33,10 @@ leftOrRight.map(_ + 1)                  //Left("left path")
 leftOrRight.swap.map(_ => "right path") //Right("right path") <- Either[Int, String]
 rightOrLeft.fold(left => s"This is $left", right => s"This is $right")
 //equivalent
-if (rightOrLeft.isRight)
-  s"This is ${rightOrLeft.right}"
-else s"This is ${rightOrLeft.left}"
+//if (rightOrLeft.isRight)
+//  s"This is ${rightOrLeft.right.get}"
+//else s"This is ${rightOrLeft.left.get}"
+
 rightOrLeft match {
   case Right(x) => s"This is $x"
   case Left(y)  => s"This is $y"
@@ -45,9 +46,8 @@ something match {
   case Some(1) => "This is 1"
   case Some(2) => "This is 2"
   case Some(x) => s"This is $x" //This is 1
-  case somet: Some[Int] =>
-    s"This is $somet" //This is Some(1) Unreachable, Some(x) cover this and the code will always goes through there
-  case somet @ Some(1) => s"This is $somet" //This is Some(1)
+  //case somet: Some[Int] => s"This is $somet" //This is Some(1) Unreachable, Some(x) cover this and the code will always goes through there
+  //case somet @ Some(1) => s"This is $somet" //This is Some(1), Some(x) cover this and the code will always goes through there
   case None            => """This 
                              |is 
                              |nothing""".stripMargin
