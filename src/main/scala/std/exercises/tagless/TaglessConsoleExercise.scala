@@ -1,4 +1,4 @@
-package std
+package std.exercises.tagless
 
 import std.exercises._
 import scala.util.Try
@@ -8,9 +8,9 @@ import scala.util.Try
 //deberemos printear por consola el resultado de llamar una vez a cada metodo
 object TaglessConsoleExercise extends App {
 
-  val console = new ConsoleIOImpl[Option]
+  val console = new ConsoleIOImpl[Quesarito]
 
-  println(Try(console.readString).toOption.flatten)
-  println(Try(console.readInt).toOption.flatten)
-  println(Try(console.readBoolean).toOption.flatten)
+  println(console.readString)
+  println(console.readInt)
+  println(console.readBoolean)
 }
