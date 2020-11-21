@@ -28,11 +28,11 @@ class CyberpunkImp(date: String) {
   val releaseDate: LocalDate = LocalDate.parse(date, pattern)
 
   @tailrec
-  final def passingDays(currentDay: LocalDate, delay: Integer = 0, release: LocalDate = releaseDate): Unit = {
+  final def passingDays(currentDay: LocalDate, delay: Integer = 0, release: LocalDate = releaseDate): String = {
     val daysBetween = ChronoUnit.DAYS.between(currentDay, release)
-    if (daysBetween == 0 && delay >= 4) {
-      println(s"${currentDay.format(pattern)} - YA HA SALIDO CYBERPUNK, POR FIN. SE ME SALTAN LAS LAGRIMAS!!!")
-    } else if (daysBetween < 15 && delay < 4) {
+    if (daysBetween == 0 && delay >= 4)
+      s"${currentDay.format(pattern)} - YA HA SALIDO CYBERPUNK, POR FIN. SE ME SALTAN LAS LAGRIMAS!!!"
+    else if (daysBetween < 15 && delay < 4) {
       println(s"${currentDay.format(pattern)} - VAYA! SE HA RETRASADO OTRA VEZ CYBERPUNK")
       val newReleaseDate = release.plusDays(20)
       println(s"${currentDay.format(pattern)} - LA NUEVA FECHA DE LANZAMIENTO ES EL " + newReleaseDate.format(pattern))
