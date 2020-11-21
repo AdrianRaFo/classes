@@ -12,7 +12,7 @@ class RecursiveTest extends AnyFunSuite with Matchers {
 
   val ciberpunk = new CyberpunkImp(initialReleaseDate)
 
-  test("Intento de testear lo que habeis hecho"){
+  test("Intento de testear lo que habeis hecho") {
     //Al incluir la fecha en el mensaje tb testeamos que se lanza en la fecha que esperamos
     val expectedFinalMessage = "28/02/2021 - YA HA SALIDO CYBERPUNK, POR FIN. SE ME SALTAN LAS LAGRIMAS!!!"
     ciberpunk.passingDays(today) shouldBe expectedFinalMessage
