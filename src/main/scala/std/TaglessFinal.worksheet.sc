@@ -1,4 +1,4 @@
-import std.exercises.ConsoleIOImpl
+import std.exercises.tagless.ConsoleIOImpl
 
 //trait formado por un tipo F que recibe otro tipo
 //metodos abstractos que devuelven un F de el tipo que necesiten
