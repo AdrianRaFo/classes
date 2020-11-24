@@ -22,6 +22,8 @@ object ToF {
   }
 }
 
+//Aqui el adri deja de venirse arriba
+
 class ConsoleIOImpl[F[_]](implicit toF: ToF[F]) extends ConsoleIO[F] {
   def readBoolean: F[Boolean] = toF.function(Try(StdIn.readBoolean))
   def readInt: F[Integer]     = toF.function(Try(StdIn.readInt))

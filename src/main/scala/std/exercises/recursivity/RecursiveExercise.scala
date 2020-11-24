@@ -34,7 +34,7 @@ class CyberpunkImp(consoleReadIO: ConsoleIO[Try]) {
     println("Introduzca una fecha inicial de lanzamiento del Cyberpunk 2077")
     consoleReadIO.readString.map(LocalDate.parse(_ ,pattern)) match {
       case Success(value) => value
-      case Failure(exception) => 
+      case Failure(_) =>
         println("Fecha no valida.")
         requestDateInput
     }
