@@ -8,7 +8,7 @@ import std.exercises.tagless.ConsoleIO
 
 class RecursiveTest extends AnyFunSuite with Matchers {
 
-  val today = LocalDate.now()
+  val today: LocalDate = LocalDate.now()
 
   //val initialReleaseDate = "10/12/2020"
 
