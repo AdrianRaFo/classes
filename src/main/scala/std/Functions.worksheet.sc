@@ -1,3 +1,9 @@
+//nested functions
+val chorizo: String => Int => Boolean = { str: String => int: Int => str.toInt == int }
+val chorizoSinString: Int => Boolean  = chorizo("1")
+val rabilloDelChorizo1: Boolean       = chorizoSinString(1)
+val rabilloDelChorizo2: Boolean       = chorizo("1")(1)
+
 //lists
 val list: List[Int] = List(1, 2, 3)
 list.map(_ + 1) //List(2, 3, 4)
@@ -6,6 +12,7 @@ list.fold(0) {
 }
 list.forall(_ % 2 == 0) //false
 list.filter(_ % 2 == 0) //List(2)
+
 //options
 val something: Option[Int] = Some(1) // Option(1)
 val empty: Option[Int]     = None
@@ -24,6 +31,7 @@ empty.map(_ + 1)         // still None
 something.toList         //empty list or List(2)
 something.contains(2)    // map(_ == 2)  true if empty false
 something.exists(_ == 2) // mandatory to return a boolean in the function
+
 //eithers
 val rightOrLeft: Either[String, Int] = Right(1)          //this can be Int or String but it's Int
 val leftOrRight: Either[String, Int] = Left("left path") //this can be Int or String but it's String
@@ -48,7 +56,7 @@ something match {
   case Some(x) => s"This is $x" //This is 1
   //case somet: Some[Int] => s"This is $somet" //This is Some(1) Unreachable, Some(x) cover this and the code will always goes through there
   //case somet @ Some(1) => s"This is $somet" //This is Some(1), Some(x) cover this and the code will always goes through there
-  case None            => """This 
+  case None => """This 
                              |is 
                              |nothing""".stripMargin
 }
