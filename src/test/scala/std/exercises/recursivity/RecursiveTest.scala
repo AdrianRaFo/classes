@@ -12,15 +12,16 @@ class RecursiveTest extends AnyFunSuite with Matchers {
 
   val today: LocalDate = LocalDate.now()
 
-  val fakeConsoleIO: ConsoleIO[Try] = new ConsoleIO[Try] {
-    def readBoolean: Try[Boolean] = throw new RuntimeException("This should not be used")
-    def readInt: Try[Integer] = throw new RuntimeException("This should not be used")
-    def readString: Try[String] = Try("10/12/2020")
-  }
-
-  val ciberpunk = new CyberpunkImp(fakeConsoleIO)
-
   test("Intento de testear lo que habeis hecho") {
+
+    val fakeConsoleIO: ConsoleIO[Try] = new ConsoleIO[Try] {
+      def readBoolean: Try[Boolean] = throw new RuntimeException("This should not be used")
+      def readInt: Try[Integer] = throw new RuntimeException("This should not be used")
+      def readString: Try[String] = Try("10/12/2020")
+    }
+
+    val ciberpunk = new CyberpunkImp(fakeConsoleIO)
+
     //Al incluir la fecha en el mensaje tb testeamos que se lanza en la fecha que esperamos
     //La fecha deberia ser inicial.plusDays(80)
     val expectedFinalMessage = "28/02/2021 - YA HA SALIDO CYBERPUNK, POR FIN. SE ME SALTAN LAS LAGRIMAS!!!"
