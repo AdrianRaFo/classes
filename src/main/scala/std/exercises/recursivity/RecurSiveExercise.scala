@@ -4,6 +4,9 @@ import scala.annotation.tailrec
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import scala.util.{Try, Success, Failure}
+
+import std.exercises.tagless.{ConsoleIO, ConsoleIOImpl}
 
 //Crea un programa que reciba la fecha de lanzamiento del Cyberpunk 2077 por consola y
 //cogiendo la fecha actual, itere por dia. Dos semanas antes del lanzamiento
@@ -23,12 +26,22 @@ import java.time.temporal.ChronoUnit
 
 //Hint: Puedes usar la anotacion @tailrec para asegurarte de que tu recursividad esta optimizada.
 
-class CyberpunkImp(date: String) {
+class CyberpunkImp(consoleReadIO: ConsoleIO[Try]) {
   import CyberpunkImp._
-  val releaseDate: LocalDate = LocalDate.parse(date, pattern)
 
   @tailrec
-  final def passingDays(currentDay: LocalDate, delay: Integer = 0, release: LocalDate = releaseDate): String = {
+  private def requestDateInput: LocalDate = {
+    println("Introduzca una fecha inicial de lanzamiento del Cyberpunk 2077")
+    consoleReadIO.readString.map(LocalDate.parse(_ ,pattern)) match {
+      case Success(value) => value
+      case Failure(exception) => 
+        println("Fecha no valida.")
+        requestDateInput
+    }
+  }
+
+  @tailrec
+  final def passingDays(currentDay: LocalDate, delay: Integer = 0, release: LocalDate = requestDateInput): String = {
     val daysBetween = ChronoUnit.DAYS.between(currentDay, release)
     if (daysBetween == 0 && delay >= 4)
       s"${currentDay.format(pattern)} - YA HA SALIDO CYBERPUNK, POR FIN. SE ME SALTAN LAS LAGRIMAS!!!"
@@ -50,7 +63,9 @@ object CyberpunkImp {
 object RecurSiveExercise extends App {
   val today = LocalDate.now()
 
-  val cyberpunk = new CyberpunkImp("10/12/2020")
+  val inputConsoleIO: ConsoleIO[Try] = new ConsoleIOImpl[Try]
+
+  val cyberpunk = new CyberpunkImp(inputConsoleIO)
 
   cyberpunk.passingDays(today)
 }

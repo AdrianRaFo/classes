@@ -4,11 +4,15 @@ import org.scalatest.funsuite.AnyFunSuite
 import java.time.LocalDate
 import org.scalatest.matchers.should.Matchers
 
+import std.exercises.tagless.ConsoleIO
+
 class RecursiveTest extends AnyFunSuite with Matchers {
 
   val today = LocalDate.now()
 
-  val initialReleaseDate = "10/12/2020"
+  //val initialReleaseDate = "10/12/2020"
+
+  val fakeConsoleIO: ConsoleIO[] = ???
 
   val ciberpunk = new CyberpunkImp(initialReleaseDate)
 
