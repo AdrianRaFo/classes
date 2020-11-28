@@ -4,9 +4,11 @@ import scala.annotation.tailrec
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import scala.util.{Try, Success, Failure}
-
-import std.exercises.tagless.{ConsoleIO, ConsoleIOImpl}
+import cats.implicits._
+import cats.effect.IOApp
+import cats.effect.ExitCode
+import cats.effect.IO
+import cats.effect.Sync
 
 //Crea un programa que reciba la fecha de lanzamiento del Cyberpunk 2077 por consola y
 //cogiendo la fecha actual, itere por dia. Dos semanas antes del lanzamiento
@@ -26,33 +28,44 @@ import std.exercises.tagless.{ConsoleIO, ConsoleIOImpl}
 
 //Hint: Puedes usar la anotacion @tailrec para asegurarte de que tu recursividad esta optimizada.
 
-class CyberpunkReschedule(consoleReadIO: ConsoleIO[Try]) {
+class CyberpunkReschedule[F[_]](consoleReadIO: Console[F])(implicit F: Sync[F]) {
   import CyberpunkReschedule._
 
-  @tailrec
-  private def requestDateInput: LocalDate = {
+  private def requestDateInput: F[LocalDate] = {
     println("Introduzca una fecha inicial de lanzamiento del Cyberpunk 2077")
-    consoleReadIO.readString.map(LocalDate.parse(_ ,pattern)) match {
-      case Success(value) => value
-      case Failure(_) =>
+    consoleReadIO.readString.map(LocalDate.parse(_, pattern)).attempt.flatMap {
+      case Right(value) => F.pure(value)
+      case Left(_) =>
         println("Fecha no valida.")
         requestDateInput
     }
   }
 
   @tailrec
-  final def passingDays(currentDay: LocalDate, delay: Integer = 0, release: LocalDate = requestDateInput): String = {
+  private def passingDays(currentDay: LocalDate, release: LocalDate, delay: Integer = 0): String = {
     val daysBetween: Long = ChronoUnit.DAYS.between(currentDay, release)
     if (daysBetween == 0 && delay >= 4)
       s"${currentDay.format(pattern)} - YA HA SALIDO CYBERPUNK, POR FIN. SE ME SALTAN LAS LAGRIMAS!!!"
     else if (daysBetween < 15 && delay < 4) {
       println(s"${currentDay.format(pattern)} - VAYA! SE HA RETRASADO OTRA VEZ CYBERPUNK")
       val newReleaseDate: LocalDate = release.plusDays(20)
-      println(s"${currentDay.format(pattern)} - LA NUEVA FECHA DE LANZAMIENTO ES EL " + newReleaseDate.format(pattern))
-      passingDays(currentDay.plusDays(1), delay + 1, newReleaseDate)
+      println(
+        s"${currentDay.format(pattern)} - LA NUEVA FECHA DE LANZAMIENTO ES EL " + newReleaseDate.format(pattern)
+      )
+      passingDays(currentDay.plusDays(1), newReleaseDate, delay + 1)
     } else
-      passingDays(currentDay.plusDays(1), delay, release)
+      passingDays(currentDay.plusDays(1), release)
   }
+
+  def calculateReleaseDate(today: LocalDate): F[ExitCode] =
+    requestDateInput.map(passingDays(today, _)).attempt.map {
+      case Right(exitMsg) =>
+        println(exitMsg)
+        ExitCode.Success
+      case Left(exception) =>
+        println(s"Execution failed with error $exception")
+        ExitCode.Error
+    }
 
 }
 
@@ -60,12 +73,12 @@ object CyberpunkReschedule {
   val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 }
 
-object RecursiveExercise extends App {
+object EffectsExercise extends IOApp {
   val today = LocalDate.now()
 
-  val inputConsoleIO: ConsoleIO[Try] = new ConsoleIOImpl[Try]
+  val inputConsoleIO: Console[IO] = new ConsoleImpl[IO]
 
   val cyberpunk = new CyberpunkReschedule(inputConsoleIO)
 
-  cyberpunk.passingDays(today)
+  def run(args: List[String]): IO[ExitCode] = cyberpunk.calculateReleaseDate(today)
 }
