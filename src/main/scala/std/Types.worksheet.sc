@@ -9,6 +9,7 @@ val character: Char      = 'c'
 val list: List[Int]       = List(1, 2, 3)
 val listWithoutDuplicates = Set(1, 1, 2, 3) //Set(1, 2, 3)
 val map: Map[Int, String] = Map(1 -> "a", 2 -> "b")
+map + (1 -> "c") //Map(1 -> c, 2 -> b)
 
 val tuples: (Int, String, Boolean) = (1, "a", true)
 
