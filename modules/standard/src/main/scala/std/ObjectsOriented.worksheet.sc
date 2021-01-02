@@ -6,7 +6,7 @@ trait Interface {
 //params, only can inherit from one abstract class
 abstract class MyAbstractClass(age: Int)
 
-//unique instance
+//unique instance created at the start of the program
 object ObjectsOriented {
 
   def main(args: Array[String]): Unit =
