@@ -6,7 +6,7 @@ function("1")
 functionAsDef("1")
 requestAFunction("1")(function) //clean one
 requestAFunction("1")((it: String) => function(it)) //explicit but less clean
-requestAFunction("1")(function(_)) //explicit but less clean
+requestAFunction("1")(function(_)) //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
 requestAFunction("1")((it: String) => functionAsDef(it)) //explicit but less clean
 requestAFunction("1")(functionAsDef(_)) //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
 requestAFunction("1")(functionAsDef) //clean one
