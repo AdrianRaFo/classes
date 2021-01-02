@@ -32,5 +32,9 @@ class MyClass(name: String, age: Int) extends MyAbstractClass(age) with Interfac
 
 }
 
-//used to model
+//used to model, multiple instances, immutable
 case class MyCaseClass(name: String, age: Int)
+//companion object, same name as the class and placed along the class, used to host related implicits and other static values
+object MyCaseClass {
+  implicit val decoder: String = "Decoder for MyCaseClass"
+}
