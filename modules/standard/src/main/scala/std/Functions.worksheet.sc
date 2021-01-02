@@ -1,7 +1,17 @@
 //functions
 def requestAFunction(str: String)(function: String => Int): Int = function(str)
-requestAFunction("1")(_.toInt)
-requestAFunction("1")((it: String) => it.toInt)
+val function: String => Int = { (it:String) => it.toInt }
+def functionAsDef(str: String) : Int = str.toInt
+function("1")
+functionAsDef("1")
+requestAFunction("1")(function) //clean one
+requestAFunction("1")((it: String) => function(it)) //explicit but less clean
+requestAFunction("1")(function(_)) //explicit but less clean
+requestAFunction("1")((it: String) => functionAsDef(it)) //explicit but less clean
+requestAFunction("1")(functionAsDef(_)) //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
+requestAFunction("1")(functionAsDef) //clean one
+requestAFunction("1")((it: String) => it.toInt) //explicit but less clean
+requestAFunction("1")(_.toInt) //clean one
 
 //nested functions
 val chorizo: String => Int => Boolean = { str: String => int: Int => str.toInt == int }
