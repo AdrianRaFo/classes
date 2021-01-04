@@ -33,7 +33,7 @@ requestAFunction("1") { it =>
 //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
 requestAFunction("1")(function(_))
 requestAFunction("1")(functionAsDef(_))
-//pattern matching
+//pattern matching (always a block)
 requestAFunction("1") { case it => function(it) }
 requestAFunction("1") { case it => functionAsDef(it) }
 requestAFunction("1") { case it => it.toInt }
