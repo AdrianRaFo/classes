@@ -9,6 +9,7 @@ lazy val standard =
     .in(file("modules/standard"))
     .settings(name := "standard")
     .settings(
+      addCompilerPlugin("org.typelevel" % "kind-projector" % "0.11.2" cross CrossVersion.full),
       libraryDependencies ++= Seq(
         "org.typelevel"     %% "cats-effect"              % "2.3.0",
         "org.scalatest"     %% "scalatest-funsuite"       % "3.2.3" % Test,
@@ -22,8 +23,9 @@ lazy val streams =
   project
     .in(file("modules/streams"))
     .settings(name := "streams")
-    .dependsOn(standard)
     .settings(libraryDependencies ++= Seq("co.fs2" %% "fs2-core" % "2.4.6"))
+    .settings(addCompilerPlugin("org.typelevel" % "kind-projector" % "0.11.2" cross CrossVersion.full))
+    .dependsOn(standard)
 
 lazy val classes =
   project

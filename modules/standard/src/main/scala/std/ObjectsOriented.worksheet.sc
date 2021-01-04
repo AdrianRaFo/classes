@@ -38,3 +38,14 @@ case class MyCaseClass(name: String, age: Int)
 object MyCaseClass {
   implicit val decoder: String = "Decoder for MyCaseClass"
 }
+
+//inheritance pattern matching
+trait Dummy
+
+case object Winny extends Dummy
+case object Kiroco extends Dummy
+val dummy: Dummy = Winny
+dummy match {
+  case Winny  => "uuuuuuuuuuhhhhhhhh danger danger"
+  case Kiroco => "uuuuhhhh"
+}

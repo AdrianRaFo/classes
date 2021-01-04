@@ -1,17 +1,22 @@
+import cats.data._
+import cats.implicits._
+
+import scala.util.Try
+
 //functions
 def requestAFunction(str: String)(function: String => Int): Int = function(str)
-val function: String => Int = { (it:String) => it.toInt }
-def functionAsDef(str: String) : Int = str.toInt
+val function: String => Int = { (it: String) => it.toInt }
+def functionAsDef(str: String): Int = str.toInt
 function("1")
 functionAsDef("1")
-requestAFunction("1")(function) //cleanest one
+requestAFunction("1")(function)                     //cleanest one
 requestAFunction("1")((it: String) => function(it)) //explicit param name
-requestAFunction("1")(function(_)) //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
+requestAFunction("1")(function(_))                                                        //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
 requestAFunction("1")((it: String) => functionAsDef(it)) //explicit param name
-requestAFunction("1")(functionAsDef(_)) //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
-requestAFunction("1")(functionAsDef) //cleanest one
+requestAFunction("1")(functionAsDef(_))                                               //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
+requestAFunction("1")(functionAsDef)            //cleanest one
 requestAFunction("1")((it: String) => it.toInt) //explicit param name
-requestAFunction("1")(_.toInt) //cleanest one
+requestAFunction("1")(_.toInt)                  //cleanest one
 
 //nested functions
 val chorizo: String => Int => Boolean = { str: String => int: Int => str.toInt == int }
@@ -48,11 +53,11 @@ something.exists(_ == 1) // mandatory to return a boolean in the function
 
 //eithers
 val right: Either[String, Int] = Right(1)          //this can be Int or String but it's Int
-val left: Either[String, Int] = Left("left path")  //this can be Int or String but it's String
-right.map(_ + 1)                  //Right(2)
-right.toOption                    //Some(2)
-left.map(_ + 1)                   //Left("left path")
-left.swap.map(_ => "right path")  //Right("right path") <- Either[Int, String]
+val left: Either[String, Int] = Left("left path") //this can be Int or String but it's String
+right.map(_ + 1)                 //Right(2)
+right.toOption                   //Some(2)
+left.map(_ + 1)                  //Left("left path")
+left.swap.map(_ => "right path") //Right("right path") <- Either[Int, String]
 right.fold(left => s"This is $left", right => s"This is $right")
 //equivalent
 //if (right.isRight)
@@ -63,26 +68,8 @@ right match {
     case Right(x) => s"This is $x"
     case Left(y)  => s"This is $y"
   }
-//pattern matching
-something match {
-    case Some(1) => "This is 1"
-    case Some(2) => "This is 2"
-    case Some(x) => s"This is $x" //This is 1
-    //case somet: Some[Int] => s"This is $somet" //This is Some(1) Unreachable, Some(x) cover this and the code will always goes through there
-    //case somet @ Some(1) => s"This is $somet" //This is Some(1), Some(1) cover this and the code will always goes through there
-    //case somet @ Some(x) => s"This is $somet with $x inside" //This is Some(1) with 1 inside, Some(x) cover this and the code will always goes through there
-    case None => """This
-                    |is
-                    |nothing""".stripMargin
-  }
 
-//inheritance pattern matching
-trait Dummy
+//traverse
+val listOfValidated = List("1", "a", "2", "b")
+listOfValidated.traverse(elem => Try(elem.toInt))
 
-case object Winny extends Dummy
-case object Kiroco extends Dummy
-val dummy: Dummy = Winny
-dummy match {
-    case Winny  => "uuuuuuuuuuhhhhhhhh danger danger"
-    case Kiroco => "uuuuhhhh"
-  }

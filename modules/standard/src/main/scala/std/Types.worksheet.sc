@@ -1,3 +1,6 @@
+import cats.data.{NonEmptyList, ValidatedNel}
+import cats.data.Validated.{Invalid, Valid}
+
 import scala.util.Try
 
 val text: String         = "abcds"
@@ -22,3 +25,20 @@ val leftOrRight: Either[String, Int] = Left("left path") //this can be Int or St
 
 val success = Try(1)                                                 //Success(1)
 val failure = Try(throw new RuntimeException("this is Winny fault")) //Failure(Exception)
+
+//From cats: ValidatedNel, validation with error accumulation
+val validate: ValidatedNel[String, Int] = Valid(1)
+val invalid: ValidatedNel[String, Int] = Invalid(NonEmptyList.one("error"))
+
+//pattern matching
+something match {
+  case Some(1) => "This is 1"
+  case Some(2) => "This is 2"
+  case Some(x) => s"This is $x" //This is 1
+  //case somet: Some[Int] => s"This is $somet" //This is Some(1) Unreachable, Some(x) cover this and the code will always goes through there
+  //case somet @ Some(1) => s"This is $somet" //This is Some(1), Some(1) cover this and the code will always goes through there
+  //case somet @ Some(x) => s"This is $somet with $x inside" //This is Some(1) with 1 inside, Some(x) cover this and the code will always goes through there
+  case None => """This
+                 |is
+                 |nothing""".stripMargin
+}
