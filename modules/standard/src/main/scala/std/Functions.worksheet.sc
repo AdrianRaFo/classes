@@ -17,6 +17,19 @@ requestAFunction("1")(_.toInt)
 requestAFunction("1")((it: String) => function(it))
 requestAFunction("1")((it: String) => functionAsDef(it))
 requestAFunction("1")((it: String) => it.toInt)
+//on block
+requestAFunction("1") { it =>
+  val result = function(it)
+  result
+}
+requestAFunction("1") { it =>
+  val result = functionAsDef(it)
+  result
+}
+requestAFunction("1") { it =>
+  val result = it.toInt
+  result
+}
 //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
 requestAFunction("1")(function(_))
 requestAFunction("1")(functionAsDef(_))
