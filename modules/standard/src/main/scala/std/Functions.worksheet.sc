@@ -20,6 +20,14 @@ requestAFunction("1")((it: String) => it.toInt)
 //(_) is redundant, this is used when the method receive more params but the function doesn't provide all of them.
 requestAFunction("1")(function(_))
 requestAFunction("1")(functionAsDef(_))
+//pattern matching
+requestAFunction("1") { case it => function(it) }
+requestAFunction("1") { case it => functionAsDef(it) }
+requestAFunction("1") { case it => it.toInt }
+//pattern matching with explicit type
+requestAFunction("1") { case it: String => function(it) }
+requestAFunction("1") { case it: String => functionAsDef(it) }
+requestAFunction("1") { case it: String => it.toInt }
 
 //nested functions
 val chorizo: String => Int => Boolean = { str: String => int: Int => str.toInt == int }
