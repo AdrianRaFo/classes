@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import scala.util.{Try, Success, Failure}
+import scala.util.{Failure, Success, Try}
 
 import std.exercises.tagless.{ConsoleIO, ConsoleIOImpl}
 
@@ -32,7 +32,7 @@ class CyberpunkImp(consoleReadIO: ConsoleIO[Try]) {
   @tailrec
   private def requestDateInput: LocalDate = {
     println("Introduzca una fecha inicial de lanzamiento del Cyberpunk 2077")
-    consoleReadIO.readString.map(LocalDate.parse(_ ,pattern)) match {
+    consoleReadIO.readString.map(LocalDate.parse(_, pattern)) match {
       case Success(value) => value
       case Failure(_) =>
         println("Fecha no valida.")

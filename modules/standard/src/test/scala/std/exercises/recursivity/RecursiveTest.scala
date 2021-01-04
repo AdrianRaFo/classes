@@ -37,8 +37,8 @@ class RecursiveTest extends AnyFunSuite with Matchers with ScalaCheckDrivenPrope
     forAll(localDateGen) { localDate =>
       val fakeConsoleIO: ConsoleIO[Try] = new ConsoleIO[Try] {
         def readBoolean: Try[Boolean] = throw new RuntimeException("This should not be used")
-        def readInt: Try[Integer] = throw new RuntimeException("This should not be used")
-        def readString: Try[String] = Try(CyberpunkImp.pattern.format(localDate))
+        def readInt: Try[Integer]     = throw new RuntimeException("This should not be used")
+        def readString: Try[String]   = Try(CyberpunkImp.pattern.format(localDate))
       }
 
       val ciberpunk = new CyberpunkImp(fakeConsoleIO)
