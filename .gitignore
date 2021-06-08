@@ -7,9 +7,9 @@ target/
 
 ### IntelliJ
 .idea
+.bsp
 
 ### VS Code
-.bsp
 .vscode
 .metals
 .bloop
