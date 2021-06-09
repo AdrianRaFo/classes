@@ -5,9 +5,11 @@ import cats.effect.{IO, Sync}
 import cats.effect.concurrent.Ref
 
 class Counter[F[_]: Sync](countRef: Ref[F, Int]) {
-  def increment() = countRef.update(_ + 1)
+  def increment(): F[Unit] = countRef.update(_ + 1)
 
-  def returnCount = countRef.get
+  def returnCount: F[Int] = countRef.get
+
+  def resultAndRestart: F[Int] = countRef.getAndSet(0)
 
 }
 
