@@ -30,6 +30,11 @@ class MyClass(name: String, age: Int) extends MyAbstractClass(age) with Interfac
   println("ha ha") //This is printed
   println(winy)    //Exception thrown here because it's executed here
 
+  lazy val thisRetainItsFirstValue = mutable
+  println(s"Executed here only once: $thisRetainItsFirstValue") // Executed here only once: true
+  mutable = false
+  println(s"Executed before: $thisRetainItsFirstValue") // Executed before: true
+
 }
 
 //used to model, multiple instances, immutable
@@ -40,9 +45,9 @@ object MyCaseClass {
 }
 
 //inheritance pattern matching
-trait Dummy
+sealed trait Dummy
 
-case object Winny extends Dummy
+case object Winny  extends Dummy
 case object Kiroco extends Dummy
 val dummy: Dummy = Winny
 dummy match {
