@@ -4,19 +4,19 @@ import cats.implicits._
 import scala.util.Try
 
 //functions
-def requestAFunction(str: String)(function: String => Int): Int = function(str)
-val function: String => Int = { (it: String) => it.toInt }
-def functionAsDef(str: String): Int = str.toInt
-function("1")
-functionAsDef("1")
+def requestAFunction(str: String)(function: Short => Int): Int = function(str.toShort)
+val function: Short => Int = { (it: Short) => it.toInt }
+def functionAsDef(str: Short): Int = str.toInt
+function(1)
+functionAsDef(1)
 //cleanest one
 requestAFunction("1")(function)
 requestAFunction("1")(functionAsDef)
 requestAFunction("1")(_.toInt)
 //explicit param name
-requestAFunction("1")((it: String) => function(it))
-requestAFunction("1")((it: String) => functionAsDef(it))
-requestAFunction("1")((it: String) => it.toInt)
+requestAFunction("1")((it: Short) => function(it))
+requestAFunction("1")((it: Short) => functionAsDef(it))
+requestAFunction("1")((it: Short) => it.toInt)
 //on block
 requestAFunction("1") { it =>
   val result = function(it)
@@ -38,9 +38,9 @@ requestAFunction("1") { case it => function(it) }
 requestAFunction("1") { case it => functionAsDef(it) }
 requestAFunction("1") { case it => it.toInt }
 //pattern matching with explicit type
-requestAFunction("1") { case it: String => function(it) }
-requestAFunction("1") { case it: String => functionAsDef(it) }
-requestAFunction("1") { case it: String => it.toInt }
+requestAFunction("1") { case it: Short => function(it) }
+requestAFunction("1") { case it: Short => functionAsDef(it) }
+requestAFunction("1") { case it: Short => it.toInt }
 
 //nested functions
 val chorizo: String => Int => Boolean = { str: String => int: Int => str.toInt == int }
