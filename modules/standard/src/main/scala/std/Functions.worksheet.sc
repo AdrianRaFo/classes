@@ -34,9 +34,18 @@ requestAFunction("1") { it =>
 requestAFunction("1")(function(_))
 requestAFunction("1")(functionAsDef(_))
 //pattern matching (always a block)
-requestAFunction("1") { case it => function(it) }
-requestAFunction("1") { case it => functionAsDef(it) }
-requestAFunction("1") { case it => it.toInt }
+requestAFunction("1") {
+  case it if it <= 0 => function(0)
+  case it => function(it)
+}
+requestAFunction("1") {
+  case it if it <= 0 => functionAsDef(0)
+  case it => function(it)
+}
+requestAFunction("1") {
+  case it if it <= 0 => 0
+  case it => it.toInt
+}
 //pattern matching with explicit type
 requestAFunction("1") { case it: Short => function(it) }
 requestAFunction("1") { case it: Short => functionAsDef(it) }
